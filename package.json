@@ -1,0 +1,28 @@
+{
+  "name": "mtr-wrapper",
+  "description": "Node.js wrapper for the mtr command/tool, based on node-mtrext converted to Typescript.",
+  "version": "1.0.0",
+  "author": "Saintwolf",
+  "contributors": [],
+  "keywords": [
+      "mtr",
+      "traceroute",
+      "tracert",
+      "hops",
+      "latency check",
+      "trace route"
+  ],
+  "homepage": "https://github.com/saintwolf/node-mtr-wrapper",
+  "repository": {
+      "type": "git",
+      "url": "https://github.com/saintwolf/node-mtr-wrapper"
+  },
+  "dependencies": {
+    "@types/events": "^3.0.3",
+    "@types/node": "^20.10.5",
+    "events": "^3.3.0",
+    "net": "^1.0.2"
+  },
+  "main": "./lib/index.js",
+  "license": "MIT"
+}
