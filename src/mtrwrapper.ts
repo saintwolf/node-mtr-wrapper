@@ -2,7 +2,7 @@ import {ChildProcess, spawn} from "child_process";
 import * as net from "net";
 import { EventEmitter } from "events";
 
-const regexPatternMtr = /^\s+?(?<hopID>[0-9]+)[.\|\-\s]+(?<hopAddress>[a-zA-Z0-9.i_\-\?]+)\s+(?<loss>[a-zA-Z0-9.]+)%?\s+(?<snt>[a-zA-Z0-9.]+)\s+(?<drop>[a-zA-Z0-9.]+)\s+(?<rcv>[a-zA-Z0-9.]+)\s+(?<last>[a-zA-Z0-9.]+)\s+(?<best>[a-zA-Z0-9.]+)\s+(?<avg>[a-zA-Z0-9.]+)\s+(?<wrst>[a-zA-Z0-9.]+)\s+(?<jttr>[a-zA-Z0-9.]+)\s+(?<javg>[a-zA-Z0-9.]+)\s+(?<jmax>[a-zA-Z0-9.]+)\s+(?<jint>[a-zA-Z0-9.]+)$/i;
+const regexPatternMtr = /^\s+?(?<hopID>[0-9]+)\.\s+AS(?<hopAsn>\?+|\d+)\s+(?<hopAddress>[a-zA-Z0-9.i_\-\?]+)\s+(?<loss>[a-zA-Z0-9.]+)%?\s+(?<snt>[a-zA-Z0-9.]+)\s+(?<drop>[a-zA-Z0-9.]+)\s+(?<rcv>[a-zA-Z0-9.]+)\s+(?<last>[a-zA-Z0-9.]+)\s+(?<best>[a-zA-Z0-9.]+)\s+(?<avg>[a-zA-Z0-9.]+)\s+(?<wrst>[a-zA-Z0-9.]+)\s+(?<jttr>[a-zA-Z0-9.]+)\s+(?<javg>[a-zA-Z0-9.]+)\s+(?<jmax>[a-zA-Z0-9.]+)\s+(?<jint>[a-zA-Z0-9.]+)$/i;
 
 interface TracerouteOptions {
     packetLen?: number;
@@ -70,6 +70,12 @@ class MtrWrapper {
         
             // This option puts mtr into wide report mode. When in this mode, mtr will not cut hostnames in the report.
             args.push('-w');
+
+            // This option prints the ASN for each hop
+            args.push('-z');
+
+            // This option sends only 5 pings instead of the default 10
+            args.push('-c 5');
         
             // These options or a trailing PACKETSIZE on the commandline sets the packet size used for probing. It is in bytes inclusive IP and ICMP headers
             if (this._options.packetLen) {
@@ -120,11 +126,6 @@ class MtrWrapper {
                 callback(error, null);
             });
         });
-    }
-
-    private _spawn(cmd: string, args: string[]) {
-        const child = spawn(cmd, args);
-        return child;
     }
 
     private _parseResult(output) {
