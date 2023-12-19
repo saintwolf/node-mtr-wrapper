@@ -32,7 +32,6 @@ class MtrWrapper {
 
     async Traceroute(callback = (error, result) => {}) {
         return new Promise((resolve, reject) => {
-            console.log("At start of _Traceroute()");
             const self = this;
             const args = [];
             // let child;
