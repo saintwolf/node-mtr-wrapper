@@ -1,7 +1,7 @@
 {
   "name": "mtr-wrapper",
   "description": "Node.js wrapper for the mtr command/tool, based on node-mtrext converted to Typescript.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Saintwolf",
   "contributors": [],
   "keywords": [
